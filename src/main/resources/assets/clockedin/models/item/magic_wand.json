@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "twogethervillagers:item/magic_wand"
+    "layer0": "clockedin:item/magic_wand"
   }
 }

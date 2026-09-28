@@ -1,0 +1,20 @@
+{
+  "message.clockedin.wand.selected": "%s selected - now right-click his bed and his workstation",
+  "message.clockedin.wand.no_villager": "Right-click a villager first to select him",
+  "message.clockedin.wand.invalid_target": "Not a bed or a workstation",
+  "message.clockedin.wand.assigned_bed": "Bed assigned to %s for good",
+  "message.clockedin.wand.assigned_job": "Workstation assigned to %s for good",
+  "message.clockedin.wand.cleared": "Assignments cleared",
+  "message.clockedin.wand.bed_taken": "That bed already belongs to %s",
+  "message.clockedin.wand.job_taken": "That workstation already belongs to %s",
+  "message.clockedin.wand.free": "Nobody is using this spot",
+  "message.clockedin.registry.header": "Work registry - %s",
+  "message.clockedin.registry.profession": "  Profession: %s",
+  "message.clockedin.registry.bed": "  Bed: %s",
+  "message.clockedin.registry.job": "  Workstation: %s",
+  "message.clockedin.registry.none": "none",
+  "message.clockedin.registry.manual": "(assigned)",
+  "message.clockedin.registry.auto": "(found on his own)",
+  "message.clockedin.wand.kept_profession": "He has already traded, so he keeps his job: %s",
+  "item.clockedin.magic_wand": "Magic Wand"
+}

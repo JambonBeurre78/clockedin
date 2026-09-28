@@ -4,11 +4,11 @@ plugins {
 }
 
 version = '0.1.0'
-base.archivesName = "twogethervillagers"
+base.archivesName = "clockedin"
 
 // The project lives in OneDrive, whose sync intermittently locks build files while Gradle
 // rewrites them ("Failed to clean up stale outputs"), so build output goes outside it.
-layout.buildDirectory = file("${System.getenv('LOCALAPPDATA')}/twogethervillagers-build")
+layout.buildDirectory = file("${System.getenv('LOCALAPPDATA')}/clockedin-build")
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
@@ -25,7 +25,7 @@ neoForge {
     }
 
     mods {
-        twogethervillagers {
+        clockedin {
             sourceSet sourceSets.main
         }
     }

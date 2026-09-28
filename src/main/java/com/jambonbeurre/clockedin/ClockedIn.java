@@ -1,4 +1,4 @@
-package com.twogether.villagers;
+package com.jambonbeurre.clockedin;
 
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.component.DataComponentType;
@@ -17,14 +17,13 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import java.util.UUID;
 
 /**
- * Villager management for the TWHOGETHER pack: bind a villager to a bed and a workstation with
- * the Magic Wand, and keep him there. Split out of TwoGether Core because none of it needs the
- * brewing mod or Mekanism.
+ * Clocked In: bind a villager to a bed and a workstation with the Magic Wand, and keep him on
+ * schedule - at work during the day, in bed at night.
  */
-@Mod(TwoGetherVillagers.MODID)
-public class TwoGetherVillagers {
+@Mod(ClockedIn.MODID)
+public class ClockedIn {
 
-    public static final String MODID = "twogethervillagers";
+    public static final String MODID = "clockedin";
 
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MODID);
     public static final DeferredRegister<DataComponentType<?>> DATA_COMPONENTS =
@@ -48,7 +47,7 @@ public class TwoGetherVillagers {
                     .serialize(VillagerAssignment.CODEC)
                     .build());
 
-    public TwoGetherVillagers(IEventBus modEventBus) {
+    public ClockedIn(IEventBus modEventBus) {
         ITEMS.register(modEventBus);
         DATA_COMPONENTS.register(modEventBus);
         ATTACHMENT_TYPES.register(modEventBus);

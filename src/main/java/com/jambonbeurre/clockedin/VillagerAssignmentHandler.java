@@ -1,4 +1,4 @@
-package com.twogether.villagers;
+package com.jambonbeurre.clockedin;
 
 import net.minecraft.core.GlobalPos;
 import net.minecraft.server.level.ServerLevel;
@@ -23,7 +23,7 @@ import java.util.WeakHashMap;
  * job at all. He is first walked there, and only teleported if he is still not there a few
  * seconds later - which is also what stops the pathfinder from retrying forever.
  */
-@EventBusSubscriber(modid = TwoGetherVillagers.MODID)
+@EventBusSubscriber(modid = ClockedIn.MODID)
 public final class VillagerAssignmentHandler {
 
     private static final int CHECK_INTERVAL_TICKS = 40;
@@ -48,7 +48,7 @@ public final class VillagerAssignmentHandler {
         if (!(villager.level() instanceof ServerLevel level)) return;
         if (villager.tickCount % CHECK_INTERVAL_TICKS != 0) return;
 
-        VillagerAssignment assignment = villager.getData(TwoGetherVillagers.VILLAGER_ASSIGNMENT.get());
+        VillagerAssignment assignment = villager.getData(ClockedIn.VILLAGER_ASSIGNMENT.get());
         if (assignment.isEmpty()) {
             STRAY_CHECKS.remove(villager);
             return;
@@ -73,7 +73,7 @@ public final class VillagerAssignmentHandler {
 
     /** Writes the assignment back into the brain, overriding whatever vanilla decided. */
     static void applyAssignment(Villager villager, ServerLevel level) {
-        VillagerAssignment assignment = villager.getData(TwoGetherVillagers.VILLAGER_ASSIGNMENT.get());
+        VillagerAssignment assignment = villager.getData(ClockedIn.VILLAGER_ASSIGNMENT.get());
         Brain<Villager> brain = villager.getBrain();
         assignment.home()
                 .filter(pos -> pos.dimension().equals(level.dimension()))

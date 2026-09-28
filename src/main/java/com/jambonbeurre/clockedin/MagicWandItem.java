@@ -1,4 +1,4 @@
-package com.twogether.villagers;
+package com.jambonbeurre.clockedin;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -36,7 +36,7 @@ import java.util.UUID;
  * useOn/interactLivingEntity, because vanilla lets the target act first: a villager would
  * open its trades and a bed would put the player to sleep before the item got a say.
  */
-@EventBusSubscriber(modid = TwoGetherVillagers.MODID)
+@EventBusSubscriber(modid = ClockedIn.MODID)
 public class MagicWandItem extends Item {
 
     /** Assignments are local, so only look for a rival in the neighbourhood of the spot. */
@@ -49,7 +49,7 @@ public class MagicWandItem extends Item {
     @SubscribeEvent
     public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
         ItemStack stack = event.getItemStack();
-        if (!stack.is(TwoGetherVillagers.MAGIC_WAND.get())) return;
+        if (!stack.is(ClockedIn.MAGIC_WAND.get())) return;
         if (!(event.getTarget() instanceof Villager villager)) return;
 
         event.setCanceled(true);
@@ -58,13 +58,13 @@ public class MagicWandItem extends Item {
 
         Player player = event.getEntity();
         if (player.isShiftKeyDown()) {
-            villager.setData(TwoGetherVillagers.VILLAGER_ASSIGNMENT.get(), VillagerAssignment.EMPTY);
-            player.displayClientMessage(Component.translatable("message.twogethervillagers.wand.cleared"), true);
+            villager.setData(ClockedIn.VILLAGER_ASSIGNMENT.get(), VillagerAssignment.EMPTY);
+            player.displayClientMessage(Component.translatable("message.clockedin.wand.cleared"), true);
             return;
         }
 
-        stack.set(TwoGetherVillagers.WAND_VILLAGER.get(), villager.getUUID());
-        player.displayClientMessage(Component.translatable("message.twogethervillagers.wand.selected",
+        stack.set(ClockedIn.WAND_VILLAGER.get(), villager.getUUID());
+        player.displayClientMessage(Component.translatable("message.clockedin.wand.selected",
                 villager.getName()), true);
         reportRegistry(player, villager);
     }
@@ -75,26 +75,26 @@ public class MagicWandItem extends Item {
      * block shows up here before anyone wonders why he is a fletcher.
      */
     private static void reportRegistry(Player player, Villager villager) {
-        VillagerAssignment assignment = villager.getData(TwoGetherVillagers.VILLAGER_ASSIGNMENT.get());
-        player.sendSystemMessage(Component.translatable("message.twogethervillagers.registry.header", villager.getName())
+        VillagerAssignment assignment = villager.getData(ClockedIn.VILLAGER_ASSIGNMENT.get());
+        player.sendSystemMessage(Component.translatable("message.clockedin.registry.header", villager.getName())
                 .withStyle(ChatFormatting.GOLD));
-        player.sendSystemMessage(Component.translatable("message.twogethervillagers.registry.profession",
+        player.sendSystemMessage(Component.translatable("message.clockedin.registry.profession",
                 Component.translatable(villager.getVillagerData().getProfession().name())));
-        player.sendSystemMessage(line("message.twogethervillagers.registry.bed",
+        player.sendSystemMessage(line("message.clockedin.registry.bed",
                 villager.getBrain().getMemory(MemoryModuleType.HOME).orElse(null), assignment.home().isPresent()));
-        player.sendSystemMessage(line("message.twogethervillagers.registry.job",
+        player.sendSystemMessage(line("message.clockedin.registry.job",
                 villager.getBrain().getMemory(MemoryModuleType.JOB_SITE).orElse(null), assignment.job().isPresent()));
     }
 
     private static Component line(String key, GlobalPos pos, boolean manual) {
         if (pos == null) {
-            return Component.translatable(key, Component.translatable("message.twogethervillagers.registry.none"))
+            return Component.translatable(key, Component.translatable("message.clockedin.registry.none"))
                     .withStyle(ChatFormatting.GRAY);
         }
         Component where = Component.literal(pos.pos().getX() + ", " + pos.pos().getY() + ", " + pos.pos().getZ());
         Component source = Component.translatable(manual
-                ? "message.twogethervillagers.registry.manual"
-                : "message.twogethervillagers.registry.auto");
+                ? "message.clockedin.registry.manual"
+                : "message.clockedin.registry.auto");
         return Component.translatable(key, Component.empty().append(where).append(" ").append(source))
                 .withStyle(manual ? ChatFormatting.GREEN : ChatFormatting.YELLOW);
     }
@@ -102,7 +102,7 @@ public class MagicWandItem extends Item {
     @SubscribeEvent
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
         ItemStack stack = event.getItemStack();
-        if (!stack.is(TwoGetherVillagers.MAGIC_WAND.get())) return;
+        if (!stack.is(ClockedIn.MAGIC_WAND.get())) return;
 
         event.setCanceled(true);
         event.setCancellationResult(InteractionResult.CONSUME);
@@ -114,7 +114,7 @@ public class MagicWandItem extends Item {
         boolean isBed = state.getBlock() instanceof BedBlock;
         Optional<Holder<PoiType>> poi = PoiTypes.forState(state);
         if (!isBed && poi.isEmpty()) {
-            player.displayClientMessage(Component.translatable("message.twogethervillagers.wand.invalid_target"), true);
+            player.displayClientMessage(Component.translatable("message.clockedin.wand.invalid_target"), true);
             return;
         }
 
@@ -129,34 +129,34 @@ public class MagicWandItem extends Item {
             // No villager in hand: use the wand as a lookup instead, and say who holds this spot.
             Villager holder = currentOccupant(level, globalTarget, null, isBed);
             player.displayClientMessage(holder == null
-                    ? Component.translatable("message.twogethervillagers.wand.free")
+                    ? Component.translatable("message.clockedin.wand.free")
                     : Component.translatable(isBed
-                            ? "message.twogethervillagers.wand.bed_taken"
-                            : "message.twogethervillagers.wand.job_taken", holder.getName()), true);
+                            ? "message.clockedin.wand.bed_taken"
+                            : "message.clockedin.wand.job_taken", holder.getName()), true);
             return;
         }
 
         Villager owner = currentOccupant(level, globalTarget, villager, isBed);
         if (owner != null) {
             player.displayClientMessage(Component.translatable(
-                    isBed ? "message.twogethervillagers.wand.bed_taken" : "message.twogethervillagers.wand.job_taken",
+                    isBed ? "message.clockedin.wand.bed_taken" : "message.clockedin.wand.job_taken",
                     owner.getName()), true);
             return;
         }
 
-        VillagerAssignment current = villager.getData(TwoGetherVillagers.VILLAGER_ASSIGNMENT.get());
+        VillagerAssignment current = villager.getData(ClockedIn.VILLAGER_ASSIGNMENT.get());
 
         if (isBed) {
-            villager.setData(TwoGetherVillagers.VILLAGER_ASSIGNMENT.get(), current.withHome(globalTarget));
-            player.displayClientMessage(Component.translatable("message.twogethervillagers.wand.assigned_bed",
+            villager.setData(ClockedIn.VILLAGER_ASSIGNMENT.get(), current.withHome(globalTarget));
+            player.displayClientMessage(Component.translatable("message.clockedin.wand.assigned_bed",
                     villager.getName()), true);
         } else {
-            villager.setData(TwoGetherVillagers.VILLAGER_ASSIGNMENT.get(), current.withJob(globalTarget));
-            player.displayClientMessage(Component.translatable("message.twogethervillagers.wand.assigned_job",
+            villager.setData(ClockedIn.VILLAGER_ASSIGNMENT.get(), current.withJob(globalTarget));
+            player.displayClientMessage(Component.translatable("message.clockedin.wand.assigned_job",
                     villager.getName()), true);
             // The profession follows the workstation, but never on a villager who already traded.
             if (!VillagerAssignmentHandler.canRetrain(villager)) {
-                player.sendSystemMessage(Component.translatable("message.twogethervillagers.wand.kept_profession",
+                player.sendSystemMessage(Component.translatable("message.clockedin.wand.kept_profession",
                         Component.translatable(villager.getVillagerData().getProfession().name()))
                         .withStyle(ChatFormatting.YELLOW));
             }
@@ -175,7 +175,7 @@ public class MagicWandItem extends Item {
         MemoryModuleType<GlobalPos> memory = bed ? MemoryModuleType.HOME : MemoryModuleType.JOB_SITE;
         for (Villager other : level.getEntitiesOfClass(Villager.class, searchArea)) {
             if (other == except) continue;
-            VillagerAssignment assignment = other.getData(TwoGetherVillagers.VILLAGER_ASSIGNMENT.get());
+            VillagerAssignment assignment = other.getData(ClockedIn.VILLAGER_ASSIGNMENT.get());
             Optional<GlobalPos> assigned = bed ? assignment.home() : assignment.job();
             if (assigned.filter(target::equals).isPresent()) return other;
             if (other.getBrain().getMemory(memory).filter(target::equals).isPresent()) return other;
@@ -184,7 +184,7 @@ public class MagicWandItem extends Item {
     }
 
     private static Villager selectedVillager(ItemStack stack, ServerLevel level) {
-        UUID id = stack.get(TwoGetherVillagers.WAND_VILLAGER.get());
+        UUID id = stack.get(ClockedIn.WAND_VILLAGER.get());
         if (id == null) return null;
         return level.getEntity(id) instanceof Villager villager && villager.isAlive() ? villager : null;
     }

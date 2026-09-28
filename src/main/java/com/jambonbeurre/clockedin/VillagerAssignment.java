@@ -1,4 +1,4 @@
-package com.twogether.villagers;
+package com.jambonbeurre.clockedin;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
