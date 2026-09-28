@@ -1,0 +1,14 @@
+# Gradle (the build directory itself lives in %LOCALAPPDATA%, see build.gradle)
+.gradle/
+build/
+run/
+out/
+*.log
+
+# IDE
+.idea/
+*.iml
+.vscode/
+bin/
+
+# Reference dumps pulled from other mods while writing recipes - not part of the source

@@ -1,0 +1,20 @@
+{
+  "message.twogethervillagers.wand.selected": "%s selected - now right-click his bed and his workstation",
+  "message.twogethervillagers.wand.no_villager": "Right-click a villager first to select him",
+  "message.twogethervillagers.wand.invalid_target": "Not a bed or a workstation",
+  "message.twogethervillagers.wand.assigned_bed": "Bed assigned to %s for good",
+  "message.twogethervillagers.wand.assigned_job": "Workstation assigned to %s for good",
+  "message.twogethervillagers.wand.cleared": "Assignments cleared",
+  "message.twogethervillagers.wand.bed_taken": "That bed already belongs to %s",
+  "message.twogethervillagers.wand.job_taken": "That workstation already belongs to %s",
+  "message.twogethervillagers.wand.free": "Nobody is using this spot",
+  "message.twogethervillagers.registry.header": "Work registry - %s",
+  "message.twogethervillagers.registry.profession": "  Profession: %s",
+  "message.twogethervillagers.registry.bed": "  Bed: %s",
+  "message.twogethervillagers.registry.job": "  Workstation: %s",
+  "message.twogethervillagers.registry.none": "none",
+  "message.twogethervillagers.registry.manual": "(assigned)",
+  "message.twogethervillagers.registry.auto": "(found on his own)",
+  "message.twogethervillagers.wand.kept_profession": "He has already traded, so he keeps his job: %s",
+  "item.twogethervillagers.magic_wand": "Magic Wand"
+}

@@ -1,0 +1,24 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="Not specified"
+
+[[mods]]
+modId="twogethervillagers"
+version="0.1.0"
+displayName="TwoGether Villagers"
+authors="noepa"
+description='''Assign villagers a bed and a workstation for good with the Magic Wand, and keep them there.'''
+
+[[dependencies.twogethervillagers]]
+    modId="neoforge"
+    type="required"
+    versionRange="[21.1.65,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.twogethervillagers]]
+    modId="minecraft"
+    type="required"
+    versionRange="[1.21.1]"
+    ordering="AFTER"
+    side="BOTH"

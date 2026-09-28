@@ -1,0 +1,36 @@
+plugins {
+    id 'eclipse'
+    id 'net.neoforged.moddev' version '1.0.20'
+}
+
+version = '0.1.0'
+base.archivesName = "twogethervillagers"
+
+// The project lives in OneDrive, whose sync intermittently locks build files while Gradle
+// rewrites them ("Failed to clean up stale outputs"), so build output goes outside it.
+layout.buildDirectory = file("${System.getenv('LOCALAPPDATA')}/twogethervillagers-build")
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+neoForge {
+    version = "21.1.235"
+
+    runs {
+        client {
+            client()
+        }
+        server {
+            server()
+        }
+    }
+
+    mods {
+        twogethervillagers {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
