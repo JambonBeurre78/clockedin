@@ -15,6 +15,7 @@
   "message.clockedin.registry.none": "none",
   "message.clockedin.registry.manual": "(assigned)",
   "message.clockedin.registry.auto": "(found on his own)",
-  "message.clockedin.wand.kept_profession": "He has already traded, so he keeps his job: %s",
-  "item.clockedin.magic_wand": "Magic Wand"
+  "item.clockedin.magic_wand": "Magic Wand",
+  "message.clockedin.wand.bed_taken_over": "Bed taken from %s and given to %s",
+  "message.clockedin.wand.job_taken_over": "Workstation taken from %s and given to %s"
 }

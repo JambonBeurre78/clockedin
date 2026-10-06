@@ -136,15 +136,23 @@ public class MagicWandItem extends Item {
             return;
         }
 
+        // The wand is absolute: whoever had this spot, vanilla or a previous assignment, loses it.
+        MemoryModuleType<GlobalPos> memory = isBed ? MemoryModuleType.HOME : MemoryModuleType.JOB_SITE;
         Villager owner = currentOccupant(level, globalTarget, villager, isBed);
         if (owner != null) {
-            player.displayClientMessage(Component.translatable(
-                    isBed ? "message.clockedin.wand.bed_taken" : "message.clockedin.wand.job_taken",
-                    owner.getName()), true);
-            return;
+            VillagerAssignmentHandler.evict(level, owner, memory, globalTarget);
+            player.sendSystemMessage(Component.translatable(
+                    isBed ? "message.clockedin.wand.bed_taken_over" : "message.clockedin.wand.job_taken_over",
+                    owner.getName(), villager.getName()).withStyle(ChatFormatting.YELLOW));
         }
 
+        // One bed and one job only: the one he had before is let go.
         VillagerAssignment current = villager.getData(ClockedIn.VILLAGER_ASSIGNMENT.get());
+        Optional<GlobalPos> previous = isBed ? current.home() : current.job();
+        previous.filter(old -> !old.equals(globalTarget)).ifPresent(old -> VillagerAssignmentHandler.release(level, old));
+        villager.getBrain().getMemory(memory).filter(old -> !old.equals(globalTarget))
+                .ifPresent(old -> VillagerAssignmentHandler.release(level, old));
+        villager.getBrain().eraseMemory(memory);
 
         if (isBed) {
             villager.setData(ClockedIn.VILLAGER_ASSIGNMENT.get(), current.withHome(globalTarget));
@@ -154,12 +162,6 @@ public class MagicWandItem extends Item {
             villager.setData(ClockedIn.VILLAGER_ASSIGNMENT.get(), current.withJob(globalTarget));
             player.displayClientMessage(Component.translatable("message.clockedin.wand.assigned_job",
                     villager.getName()), true);
-            // The profession follows the workstation, but never on a villager who already traded.
-            if (!VillagerAssignmentHandler.canRetrain(villager)) {
-                player.sendSystemMessage(Component.translatable("message.clockedin.wand.kept_profession",
-                        Component.translatable(villager.getVillagerData().getProfession().name()))
-                        .withStyle(ChatFormatting.YELLOW));
-            }
         }
 
         VillagerAssignmentHandler.applyAssignment(villager, level);

@@ -28,6 +28,14 @@ public record VillagerAssignment(Optional<GlobalPos> home, Optional<GlobalPos> j
         return new VillagerAssignment(home, Optional.of(pos));
     }
 
+    public VillagerAssignment withoutHome() {
+        return new VillagerAssignment(Optional.empty(), job);
+    }
+
+    public VillagerAssignment withoutJob() {
+        return new VillagerAssignment(home, Optional.empty());
+    }
+
     public boolean isEmpty() {
         return home.isEmpty() && job.isEmpty();
     }
