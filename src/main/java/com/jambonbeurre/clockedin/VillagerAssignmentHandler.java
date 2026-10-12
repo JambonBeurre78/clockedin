@@ -144,7 +144,9 @@ public final class VillagerAssignmentHandler {
     }
 
     static void release(ServerLevel level, GlobalPos pos) {
-        if (pos.dimension().equals(level.dimension()) && level.isLoaded(pos.pos())) {
+        // Only where a POI still exists: release() throws "POI never registered" on a broken block.
+        if (pos.dimension().equals(level.dimension()) && level.isLoaded(pos.pos())
+                && level.getPoiManager().getType(pos.pos()).isPresent()) {
             level.getPoiManager().release(pos.pos());
         }
     }
