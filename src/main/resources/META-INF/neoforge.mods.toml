@@ -4,7 +4,7 @@ license="Not specified"
 
 [[mods]]
 modId="clockedin"
-version="0.2.0"
+version="0.2.1"
 displayName="Clocked In"
 authors="noepa"
 description='''Assign villagers a bed and a workstation for good with the Magic Wand, and keep them there.'''

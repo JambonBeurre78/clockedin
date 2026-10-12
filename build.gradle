@@ -3,7 +3,7 @@ plugins {
     id 'net.neoforged.moddev' version '1.0.20'
 }
 
-version = '0.2.0'
+version = '0.2.1'
 base.archivesName = "clockedin"
 
 // The project lives in OneDrive, whose sync intermittently locks build files while Gradle

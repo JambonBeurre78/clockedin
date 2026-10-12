@@ -20,6 +20,7 @@ import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.phys.AABB;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
@@ -46,7 +47,9 @@ public class MagicWandItem extends Item {
         super(properties);
     }
 
-    @SubscribeEvent
+    // Highest priority, and cancelled events too: lecterns holding a Patchouli, Modonomicon or
+    // CyclopsCore book have those mods cancel the click first, and the wand must still win.
+    @SubscribeEvent(priority = EventPriority.HIGHEST, receiveCanceled = true)
     public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
         ItemStack stack = event.getItemStack();
         if (!stack.is(ClockedIn.MAGIC_WAND.get())) return;
@@ -99,7 +102,9 @@ public class MagicWandItem extends Item {
                 .withStyle(manual ? ChatFormatting.GREEN : ChatFormatting.YELLOW);
     }
 
-    @SubscribeEvent
+    // Highest priority, and cancelled events too: lecterns holding a Patchouli, Modonomicon or
+    // CyclopsCore book have those mods cancel the click first, and the wand must still win.
+    @SubscribeEvent(priority = EventPriority.HIGHEST, receiveCanceled = true)
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
         ItemStack stack = event.getItemStack();
         if (!stack.is(ClockedIn.MAGIC_WAND.get())) return;
